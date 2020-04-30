@@ -11,8 +11,14 @@ import com.nullroutine.wan.util.ActivityManager
  *
  */
 class BaseApp : Application() {
+    companion object {
+        lateinit var instance: BaseApp
+
+    }
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
         registerActivityLifecycleCallbacks(
             ActivityLifecycleCallbacksAdapter(
                 onActivityCreated = { activity, _ ->

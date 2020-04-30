@@ -11,24 +11,49 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:layout_height="48dp"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <LinearLayout
                 android:id="@+id/ll_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/shape_bg_search"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_search_black_24dp"
+                    android:tint="@color/textColorThird" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_hint"
+                    android:textColor="@color/textColorThird"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.tabs.TabLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/ViewPager_Home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </com.google.android.material.tabs.TabLayout>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

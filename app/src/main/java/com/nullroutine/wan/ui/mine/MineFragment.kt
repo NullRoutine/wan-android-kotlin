@@ -16,6 +16,6 @@ class MineFragment : BaseFragment() {
 
 
     override fun getLayoutRes(): Int {
-        return R.layout.fragment_share
+        return R.layout.fragment_mine
     }
 }
