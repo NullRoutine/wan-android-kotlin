@@ -1,10 +1,16 @@
 package com.nullroutine.wan.ui.base
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonParseException
 import com.nullroutine.wan.BaseApp
 import com.nullroutine.wan.R
+import com.nullroutine.wan.http.ApiException
+import com.nullroutine.wan.ui.common.UserRepository
+import com.nullroutine.wan.util.bus.Bus
+import com.nullroutine.wan.util.bus.USER_LOGIN_STATE_CHANGED
 import com.nullroutine.wan.util.showToast
 import kotlinx.coroutines.*
 import java.net.ConnectException
@@ -21,6 +27,10 @@ typealias Cancel = suspend (e: Exception) -> Unit
  */
 open class BaseViewModel : ViewModel() {
 
+    protected val userRepository by lazy { UserRepository() }
+
+    val loginStatusInvalid: MutableLiveData<Boolean> = MutableLiveData()
+
     /**
      * 创建并执行协程
      * @param block 协程中执行
@@ -28,6 +38,7 @@ open class BaseViewModel : ViewModel() {
      * @return Job
      */
     protected fun launch(block: Block<Unit>, error: Error? = null, cancel: Cancel? = null): Job {
+        Log.e("TAG", loginStatusInvalid.value.toString())
         return viewModelScope.launch {
             try {
                 block.invoke()
@@ -69,25 +80,26 @@ open class BaseViewModel : ViewModel() {
      * @param e 异常
      */
     private fun onError(e: Exception) {
+        Log.e("TAG", e.toString())
         when (e) {
-//            is ApiException -> {
-//                when (e.code) {
-//                    -1001 -> {
-//                        // 登录失效
-//                        userRepository.clearLoginState()
-//                        Bus.post(USER_LOGIN_STATE_CHANGED, false)
-//                        loginStatusInvalid.value = true
-//                    }
-//                    -1 -> {
-//                        // 其他api错误
-//                        App.instance.showToast(e.message)
-//                    }
-//                    else -> {
-//                        // 其他错误
-//                        App.instance.showToast(e.message)
-//                    }
-//                }
-//            }
+            is ApiException -> {
+                when (e.code) {
+                    -1001 -> {
+                        // 登录失效
+                        userRepository.clearLoginState()
+                        Bus.post(USER_LOGIN_STATE_CHANGED, false)
+                        loginStatusInvalid.value = true
+                    }
+                    -1 -> {
+                        // 其他api错误
+                        BaseApp.instance.showToast(e.message)
+                    }
+                    else -> {
+                        // 其他错误
+                        BaseApp.instance.showToast(e.message)
+                    }
+                }
+            }
             is ConnectException -> {
                 // 连接失败
                 BaseApp.instance.showToast(BaseApp.instance.getString(R.string.network_connection_failed))
@@ -110,5 +122,5 @@ open class BaseViewModel : ViewModel() {
     /**
      * 登录状态
      */
-//    fun loginStatus() = userRepository.isLogin()
+    fun loginStatus() = userRepository.isLogin()
 }

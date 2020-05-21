@@ -1,7 +1,9 @@
 package com.nullroutine.wan.http
 
-import com.nullroutine.wan.model.Article
-import retrofit2.http.GET
+import com.nullroutine.wan.model.bean.Article
+import com.nullroutine.wan.model.bean.Pagination
+import com.nullroutine.wan.model.bean.UserInfo
+import retrofit2.http.*
 
 /**
  *@Author：created by tang.wangqiang
@@ -14,5 +16,31 @@ interface ApiService {
     }
 
     @GET("/article/top/json")
-    suspend fun getTopArticleList():ApiResult<List<Article>>
+    suspend fun getTopArticleList(): ApiResult<List<Article>>
+
+    @GET("/article/list/{page}/json")
+    suspend fun getArticleList(@Path("page") page: Int): ApiResult<Pagination<Article>>
+
+    @GET("/article/listproject/{page}/json")
+    suspend fun getProjectList(@Path("page") page: Int): ApiResult<Pagination<Article>>
+
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): ApiResult<UserInfo>
+
+    @POST("lg/collect/{id}/json")
+    suspend fun collect(@Path("id") id: Int): ApiResult<Any?>
+
+    @POST("lg/uncollect_originId/{id}/json")
+    suspend fun uncollect(@Path("id") id: Int): ApiResult<Any?>
+
+    @FormUrlEncoded
+    @POST("article/query/{page}/json")
+    suspend fun search(
+        @Field("k") keywords: String,
+        @Path("page") page: Int
+    ): ApiResult<Pagination<Article>>
 }

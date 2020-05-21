@@ -1,4 +1,4 @@
-package com.nullroutine.wan.model
+package com.nullroutine.wan.model.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
