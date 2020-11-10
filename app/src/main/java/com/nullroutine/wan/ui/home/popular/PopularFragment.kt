@@ -14,6 +14,7 @@ import com.nullroutine.wan.util.bus.Bus
 import com.nullroutine.wan.util.bus.USER_COLLECT_UPDATED
 import com.nullroutine.wan.util.bus.USER_LOGIN_STATE_CHANGED
 import kotlinx.android.synthetic.main.fragment_popular.*
+import kotlinx.android.synthetic.main.include_reload.*
 
 /**
  *@Author：created by tang.wangqiang
@@ -67,6 +68,9 @@ class PopularFragment : BaseVmFragment<PopularViewModel>(), ScrollToTop {
                     }
                 }
             }
+        }
+        btnReload.setOnClickListener {
+            mViewModel.refreshArticleList()
         }
     }
 

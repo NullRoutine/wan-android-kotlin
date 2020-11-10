@@ -1,6 +1,9 @@
 package com.nullroutine.wan.model.bean
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -9,7 +12,9 @@ import kotlinx.android.parcel.Parcelize
  *
  */
 @Parcelize
+@Entity
 data class Article(
+    @PrimaryKey(autoGenerate = true)
     var primaryKeyId: Int = 0,
     var apkLink: String? = "",
     var audit: Int = 0,
@@ -35,6 +40,7 @@ data class Article(
     var shareUser: String? = "",
     var superChapterId: Int = 0,
     var superChapterName: String? = "",
+    @Ignore
     var tags: List<Tag> = emptyList(),
     var title: String? = "",
     var type: Int = 0,

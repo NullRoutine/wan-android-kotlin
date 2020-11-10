@@ -10,11 +10,17 @@ import com.nullroutine.wan.common.ScrollToTop
 import com.nullroutine.wan.common.SimpleFragmentPagerAdapter
 import com.nullroutine.wan.ui.base.BaseFragment
 import com.nullroutine.wan.ui.home.latest.LatestFragment
+import com.nullroutine.wan.ui.home.plaza.PlazaFragment
 import com.nullroutine.wan.ui.home.popular.PopularFragment
-import com.nullroutine.wan.ui.mine.MineFragment
+import com.nullroutine.wan.ui.home.project.ProjectFragment
+import com.nullroutine.wan.ui.home.wechat.WechatFragment
+import com.nullroutine.wan.ui.search.SearchActivity
+import com.nullroutine.wan.util.ActivityManager
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment(), ScrollToTop {
+
+
     private lateinit var fragments: List<Fragment>
     private var currentOffset = 0
 
@@ -32,9 +38,9 @@ class HomeFragment : BaseFragment(), ScrollToTop {
         fragments = listOf(
             PopularFragment.newInstance(),
             LatestFragment.newInstance(),
-            MineFragment.newInstance(),
-            MineFragment.newInstance(),
-            MineFragment.newInstance()
+            PlazaFragment.newInstance(),
+            ProjectFragment.newInstance(),
+            WechatFragment.newInstance()
         )
         val titles = listOf<CharSequence>(
             getString(R.string.popular_articles),
@@ -65,6 +71,7 @@ class HomeFragment : BaseFragment(), ScrollToTop {
                 currentOffset = offset
             }
         })
+        ll_search.setOnClickListener { ActivityManager.startActivity(SearchActivity::class.java) }
     }
 
     override fun scrollToTop() {

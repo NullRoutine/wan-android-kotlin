@@ -1,8 +1,6 @@
 package com.nullroutine.wan.http
 
-import com.nullroutine.wan.model.bean.Article
-import com.nullroutine.wan.model.bean.Pagination
-import com.nullroutine.wan.model.bean.UserInfo
+import com.nullroutine.wan.model.bean.*
 import retrofit2.http.*
 
 /**
@@ -42,5 +40,47 @@ interface ApiService {
     suspend fun search(
         @Field("k") keywords: String,
         @Path("page") page: Int
+    ): ApiResult<Pagination<Article>>
+
+    @GET("hotkey/json")
+    suspend fun getHotWords(): ApiResult<List<HotWord>>
+
+    @GET("banner/json")
+    suspend fun getBanners(): ApiResult<List<Banner>>
+
+    @GET("friend/json")
+    suspend fun getFrequentlyWebsites(): ApiResult<List<Frequently>>
+
+    @GET("navi/json")
+    suspend fun getNavigations(): ApiResult<List<Navigation>>
+
+    @GET("/user_article/list/{page}/json")
+    suspend fun getUserArticleList(@Path("page") page: Int): ApiResult<Pagination<Article>>
+
+    @GET("project/tree/json")
+    suspend fun getProjectCategories(): ApiResult<MutableList<Category>>
+
+    @GET("project/list/{page}/json")
+    suspend fun getProjectListByCid(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): ApiResult<Pagination<Article>>
+
+    @GET("wxarticle/chapters/json")
+    suspend fun getWechatCategories(): ApiResult<MutableList<Category>>
+
+    @GET("wxarticle/list/{id}/{page}/json")
+    suspend fun getWechatArticleList(
+        @Path("page") page: Int,
+        @Path("id") id: Int
+    ): ApiResult<Pagination<Article>>
+
+    @GET("tree/json")
+    suspend fun getArticleCategories(): ApiResult<MutableList<Category>>
+
+    @GET("article/list/{page}/json")
+    suspend fun getArticleListByCid(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
     ): ApiResult<Pagination<Article>>
 }
